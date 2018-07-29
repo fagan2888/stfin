@@ -2,6 +2,7 @@ import finlib.core as finlib
 
 print "Testing get_sp500()".upper()
 records = finlib.get_sp500()
+print "The field names: {}".format(", ".join(records[0]._fields))
 print "The first few symbols:"
 print "\n".join(["{:>8}: {}".format(r.tickersymbol, r.security) for r in records][:10])
 print ""
