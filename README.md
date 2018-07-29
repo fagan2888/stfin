@@ -7,7 +7,7 @@ The functions implemented so far:
 
 ``demo.py`` demonstrates basic usage. Run it from the command line using ``python demo.py``. The output should look something like:
 
-```bash
+```
 ➜ ~/git/finlib (master) python demo.py 
 TESTING GET_SP500()
 The first few symbols:
