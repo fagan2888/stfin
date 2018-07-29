@@ -23,10 +23,10 @@ if __name__ == "__main__":
         fields = ["t", "open", "close", "high", "low", "volume"]
         for i,t in enumerate(data["t"]):
             s = [iformat.format(d) if type(d) is int else fformat.format(d) if type(d) is float else str(d) for d in [data[f][i] for f in fields]]
+            # Now that we know roughly how wide each field is going to be, print the header row positioned accordingly            
             if i == 0:
-                # Now that we know roughly how wide each field is going to be, print the header row positioned accordingly
                 print "\t".join([fld[:len(s[ifld])] + " "*(len(s[ifld])- len(fld)) for ifld,fld in enumerate(fields)])
-            print "\t".join(s)
+            print "\t".join(s) # Print the data
         exit(0)
     
     
