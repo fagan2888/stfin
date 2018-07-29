@@ -136,7 +136,7 @@ def get_sp500():
 
     Record = namedtuple("Record", " ".join(fields_to_keep))
     records = []
-    for t in data_rows: # Skip the first row, it's the hader
+    for t in data_rows:
         td = t.find_all('td')
         kwargs = dict(zip(fields_to_keep, [td[all_fields.index(f)].text.strip() for f in fields_to_keep]))
         records.append(Record(**kwargs))
