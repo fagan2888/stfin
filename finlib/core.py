@@ -1,6 +1,9 @@
 import datetime
 import urllib2
 import json
+from bs4 import BeautifulSoup as bs
+from collections import namedtuple
+import re
 
 from helpers import totimestamp
 
@@ -101,3 +104,41 @@ def get_yahoo_quote(symbol, interval = "1m", time_string = "1week", start_dateti
                   "symbol":symb,
                   "error":error,
                   "query":query}    
+
+    
+def get_sp500():
+    """ Scrapes Wikipedia for the list of S&P500 companies.
+    The result is returned as a list of namedtuples.
+    Each named tuple has the same fields as the columns in 
+    the Wikipedia table which aren't just hyperlinks.
+
+    Example: Get all the ticker symbols.
+    
+    records = get_sp500()
+    symbs = [r.tickersymbol for r in records]
+    """
+
+    query = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+    html = urllib2.urlopen(query).read()
+    soup = bs(html, "html.parser")
+
+    # Get the first table
+    table = soup.find("table")
+    # Get all the rows
+    rows = table.find_all("tr")
+    header_row = rows[0]
+    data_rows  = rows[1:]
+
+    # The first row is a header containing the fields
+    all_fields = [re.sub("[^a-z]", "", t.text.lower()) for t in header_row.find_all('th')]
+    fields_to_drop = ["secfilings"] # This is just a hyperlink to the reports
+    fields_to_keep = [f for f in all_fields if f not in fields_to_drop]
+
+    Record = namedtuple("Record", " ".join(fields_to_keep))
+    records = []
+    for t in data_rows: # Skip the first row, it's the hader
+        td = t.find_all('td')
+        kwargs = dict(zip(fields_to_keep, [td[all_fields.index(f)].text.strip() for f in fields_to_keep]))
+        records.append(Record(**kwargs))
+    
+    return records
