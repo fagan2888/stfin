@@ -1,4 +1,4 @@
-# finlib
+# stfin
 A simple library for collecting financial data from the web.
 
 The functions implemented so far:

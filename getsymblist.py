@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     import sys
     import argparse
-    import finlib.core as finlib
+    import stfin.core as stfin
     import pdb
     # python getsymb.py TWTR 1m 1week -fformat :6.2f -iformat :10d
 
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     n = args.n if args.n else 1000
     
     # Print the symbols
-    print "\n".join([r.tickersymbol for r in finlib.get_sp500()[:n]]),
+    print "\n".join([r.tickersymbol for r in stfin.get_sp500()[:n]]),
     exit(0)
     
     

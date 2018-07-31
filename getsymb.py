@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     import sys
     import argparse
-    import finlib.core as finlib
+    import stfin.core as stfin
     import pdb
     # python getsymb.py TWTR 1m 1week -fformat :6.2f -iformat :10d
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     fformat = "{FMT}".replace("FMT", args.fformat if args.fformat else "")
 
     # Fetch the data
-    success, data = finlib.get_yahoo_quote(args.symbol, args.interval, args.time_string)
+    success, data = stfin.get_yahoo_quote(args.symbol, args.interval, args.time_string)
     if not success:
         print "Could not fetch data: {}".format(data["error"])
         exit(1)
